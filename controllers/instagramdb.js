@@ -1,23 +1,30 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'admin',
-    database: 'linkedin',
+    host: 'postgres://eiqagrbqkqxyru:5cb4b70c4d20ef1d142ea566a7c05761bb83a0de6ba8140b45ce43bb78821e2b@ec2-52-44-31-100.compute-1.amazonaws.com:5432/d1t0vrpf66i4h6',
+    user: 'eiqagrbqkqxyru',
+    password: '5cb4b70c4d20ef1d142ea566a7c05761bb83a0de6ba8140b45ce43bb78821e2b',
+    database: 'd1t0vrpf66i4h6',
     port: '5432' 
 })
 
 const getusers = async (req, res) => {
     
     try{
-    const ra= 'raulehernandeza@gmail.com'
-    const response = await pool.query('SELECT * FROM usuario where email = $1',[ra]);
-    res.status(200).json(response.rows);
-    }
-    catch(err){
-        res.send(err);
-    }
+        console.log('pasa por aqui 1')
+        const email = req.body.email;
+        const contrasena = req.body.password
+        console.log(email + '  ' + contrasena)
+        const response = await pool.query('SELECT * FROM user_1');
+        console.log('pasa por aqui 2')
+        console.log(response)
+        console.log('pasa por aqui 3')
+        res.status(200).json(response.rows);
+        }
+        catch(error){
+            console.log(error)
+            res.send(error);
+        }
 
 }
 
@@ -30,10 +37,11 @@ const postusers = async (req, res) => {
     const fecha_nac = req.body.fecha_nac;
     const telefono = req.body.telefono;
     const email = req.body.email;
-    const residencia_actual = req.body.pais;
+    const residencia_actual = req.body.id_pais;
     const contrasena = req.body.password;
+    const languaje = "1"
     const tipo_usuario = false;
-    const response = await pool.query('insert into usuario (nombre, apellido, fecha_nac, telefono, email, residencia_actual, contrasena, tipo_usuario) values ($1, $2, $3, $4, $5, $6, $7, $8)', [nombre, apellido, fecha_nac, telefono, email, residencia_actual, contrasena, tipo_usuario]);
+    const response = await pool.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]);
     res.status(200).json(response.rows);
     console.log('todo bien')
     }
