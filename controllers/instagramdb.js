@@ -1,30 +1,36 @@
-const { Pool } = require('pg');
+const { Client } = require('pg');
 
-const pool = new Pool({
-    host: 'ec2-52-44-31-100.compute-1.amazonaws.com',
-    user: 'eiqagrbqkqxyru',
-    password: '5cb4b70c4d20ef1d142ea566a7c05761bb83a0de6ba8140b45ce43bb78821e2b',
-    database: 'd1t0vrpf66i4h6',
-    port: '5432' 
+const client = new Client({
+    connectionString:"postgres: // eiqagrbqkqxyru : 5cb4b70c4d20ef1d142ea566a7c05761bb83a0de6ba8140b45ce43bb78821e2b @ ec2-52-44-31-100.compute-1.amazonaws.com : 5432 / d1t0vrpf66i4h6",
+
+   
+    
 })
 
 const getusers = async (req, res) => {
     
-    try{
+   
         console.log('pasa por aqui 1')
         const email = req.body.email;
-        const contrasena = req.body.password
-        console.log(email + '  ' + contrasena)
-        const response = await pool.query('SELECT * FROM user_1');
-        console.log('pasa por aqui 2')
+        const contrasena = req.body.password;
+        client.connect();
+        
+        const response = await client.query('SELECT * FROM user_1 where email=$1',[email]).then(resp=>{
+
+console.log('pasa por aqui 2')
         console.log(response)
         console.log('pasa por aqui 3')
-        res.status(200).json(response.rows);
-        }
-        catch(error){
-            console.log(error)
-            res.send(error);
-        }
+        res.status(200).json(resp.rows);
+        client.end();
+
+        }).catch(err=>{
+
+            console.log(err)
+            res.status(500).json({error:err})
+        })
+        
+        
+       
 
 }
 
