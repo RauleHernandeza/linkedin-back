@@ -17,6 +17,7 @@ const getusers = async(req, res) => {
         console.log('pasa por aqui 1')
         const email = req.body.email;
         const contrasena =   req.body.password
+        console.log(req.body);
        client.connect();
       await client.query('SELECT * FROM user_1 where email=$1',[email]).then(response=>{
 
