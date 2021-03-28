@@ -18,7 +18,7 @@ console.log('pasa por aqui 2')
         res.sendStatus(200).json(resp.rows);
         client.end();
 
-        }catch{err=>{
+        }catch (err){
 
             console.log(err)
             res.sendStatus(500).json({error:err})
