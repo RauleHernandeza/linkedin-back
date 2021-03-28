@@ -14,7 +14,6 @@ const getusers = async(req, res) => {
 
 console.log('pasa por aqui 2')
         console.log(response)
-        console.log('pasa por aqui 3')
         res.sendStatus(200).json(resp.rows);
         client.end();
 
