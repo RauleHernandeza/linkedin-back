@@ -20,7 +20,7 @@ const getusers = async(req, res) => {
         console.log(req.body);
        client.connect();
       await client.query('SELECT * FROM user_1 where email=$1',[req.body.email]).then(response=>{
-                       let resp=response.rows[0];
+                       let resp=response.rows;
                          console.log(resp);
                        
                   client.end();
