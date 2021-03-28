@@ -1,9 +1,9 @@
 const { Client } = require('pg');
-
+const bcrypt =require('bcryptjs')
 const client = new Client(
     
     {connectionString:
-      "postgres: // eiqagrbqkqxyru : 5cb4b70c4d20ef1d142ea566a7c05761bb83a0de6ba8140b45ce43bb78821e2b @ ec2-52-44-31-100.compute-1.amazonaws.com : 5432 / d1t0vrpf66i4h6",
+      "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
       ssl:{
           rejectUnauthorized:false
       }
@@ -16,20 +16,21 @@ const getusers = async(req, res) => {
    
         console.log('pasa por aqui 1')
         const email = req.body.email;
-        const contrasena = req.body.password;
-        try{
+        const contrasena =   req.body.password
        
-       const response=await client.query('SELECT * FROM user_1 where email=$1',[email])
+      await client.query('SELECT * FROM user_1 where email=$1',[email]).then(response=>{
 
-console.log('pasa por aqui 2')
-        console.log(response)
-        res.sendStatus(200).json(resp.rows);
-        
-        }catch (err){
+                  if(bcrypt.compareSync(contrasena,response.rows.password)){
+                      res.send({status:200,body:response.rows})
+                  }else {
+                    res.send({status:400,message:"las contrasenas no coinciden"})   
+                  }
+        })
+        .catch ((err)=>{
           
             console.log(err)
-            res.sendStatus(500).json({error:err})
-        }
+            res.send({message:err})
+        })
         
         
        
@@ -38,25 +39,33 @@ console.log('pasa por aqui 2')
 
 const postusers = async (req, res) => {
     
-    try{
+   
     console.log(req.body);
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
     const fecha_nac = req.body.fecha_nac;
     const telefono = req.body.telefono;
     const email = req.body.email;
-    const residencia_actual = req.body.id_pais;
-    const contrasena = req.body.password;
+    const residencia_actual =parseInt( req.body.id_pais);
+    const contrasena = bcrypt.hashSync(req.body.password,10) ;
     const languaje = "1"
     const tipo_usuario = false;
-    const response = await pool.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]);
-    res.status(200).json(response.rows);
-    console.log('todo bien')
-    }
-    catch(err){
-        res.send('error en la creacion de usuario ' + err);
-    } 
+    client.connect();
+    
+    await client.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
 
+console.log(response.rows);
+    res.send({status:200,body:response.rows});
+    
+    console.log('todo bien')
+
+    })
+    
+    
+    .catch(err=>{
+        console.log(err)
+        res.send({status:500,message:err})
+    })
 }
 
 module.exports = {
