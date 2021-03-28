@@ -15,13 +15,13 @@ const getusers = async (req, res) => {
 console.log('pasa por aqui 2')
         console.log(response)
         console.log('pasa por aqui 3')
-        res.status(200).json(resp.rows);
+        res.sendStatus(200).json(resp.rows);
         client.end();
 
         }).catch(err=>{
 
             console.log(err)
-            res.status(500).json({error:err})
+            res.sendStatus(500).json({error:err})
         })
         
         
