@@ -26,7 +26,7 @@ const getusers = async(req, res) => {
                          console.log(resp);
                       console.log(response.rows)               
                
-                  if(!!!resp){
+                  if(response.rowCount >0){
                   if(bcrypt.compareSync(contrasena,resp.password)){
                       res.send({status:200,body:response.rows})
                   }else {
