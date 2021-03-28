@@ -29,7 +29,7 @@ console.log('pasa por aqui 2')
         client.end();
 
         }catch (err){
-
+          client.end();
             console.log(err)
             res.sendStatus(500).json({error:err})
         }
