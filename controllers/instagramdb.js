@@ -2,14 +2,15 @@ const { Client } = require('pg');
 
 const client = new Client("postgres: // eiqagrbqkqxyru : 5cb4b70c4d20ef1d142ea566a7c05761bb83a0de6ba8140b45ce43bb78821e2b @ ec2-52-44-31-100.compute-1.amazonaws.com : 5432 / d1t0vrpf66i4h6")
 
-const getusers =(req, res) => {
+const getusers = async(req, res) => {
     
    
         console.log('pasa por aqui 1')
         const email = req.body.email;
         const contrasena = req.body.password;
+        try{
         client.connect();
-        client.query('SELECT * FROM user_1 where email=$1',[email]).then(resp=>{
+       const response=await client.query('SELECT * FROM user_1 where email=$1',[email])
 
 console.log('pasa por aqui 2')
         console.log(response)
@@ -17,11 +18,11 @@ console.log('pasa por aqui 2')
         res.sendStatus(200).json(resp.rows);
         client.end();
 
-        }).catch(err=>{
+        }catch{err=>{
 
             console.log(err)
             res.sendStatus(500).json({error:err})
-        })
+        }
         
         
        
