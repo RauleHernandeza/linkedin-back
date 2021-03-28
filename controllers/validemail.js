@@ -17,7 +17,7 @@ const validemail = async (req, res) => {
         secure:false,
         auth:{
             user: "robetorobatox186@gmail.com",
-            pass: "Daniela21"
+            pass: "Daniela21!"
         },
         tls: {
             rejectUnauthorized: false
