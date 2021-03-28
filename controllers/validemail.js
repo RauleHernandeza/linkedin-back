@@ -16,8 +16,8 @@ const validemail = async (req, res) => {
         port: 587,
         secure:false,
         auth:{
-            user: "smtp.de.pratica@gmail.com",
-            pass: "spamydemas77"
+            user: "robetorobatox186@gmail.com",
+            pass: "Daniela21"
         },
         tls: {
             rejectUnauthorized: false
