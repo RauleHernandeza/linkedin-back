@@ -23,16 +23,16 @@ const getusers = async(req, res) => {
                        let resp=response.rows[0];
                          console.log(resp);
                        
+                  client.end();
                   if(bcrypt.compareSync(contrasena,resp.password)){
                       res.send({status:200,body:response.rows})
                   }else {
                     res.send({status:400,message:"usuaio o  contrasena invalidos"})   
                   }
                 
-                  client.end();
         })
         .catch ((err)=>{
-          client.end
+          client.end();
             console.log(err)
             res.send({message:err})
         })
