@@ -25,7 +25,7 @@ const getusers = async(req, res) => {
         let resp=response.rows[0];
                          console.log(resp);
                       console.log(response.rows)               
-                  client.end();
+               
                   if(!!!resp){
                   if(bcrypt.compareSync(contrasena,resp.password)){
                       res.send({status:200,body:response.rows})
@@ -39,7 +39,7 @@ const getusers = async(req, res) => {
                 
         })
         .catch ((err)=>{
-          client.end();
+          
             console.log(err)
             res.send({message:err})
         })
