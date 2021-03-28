@@ -19,12 +19,12 @@ const getusers = async(req, res) => {
         const contrasena =   req.body.password
         console.log(req.body);
        client.connect();
-      await client.query('SELECT * FROM user_1 where email=$1',[req.body.email]).then(response=>{
+      await client.query('SELECT * FROM user_1 where email=$1',[email]).then(response=>{
                 
         
         let resp=response.rows[0];
                          console.log(resp);
-                       
+                      console.log(response.rows)               
                   client.end();
                   if(!!!resp){
                   if(bcrypt.compareSync(contrasena,resp.password)){
