@@ -8,7 +8,8 @@ const verificar_ruta = async (req, res) => {
 }
 
 const validemail = async (req, res) => {
-    var ramdom= randomNumber();
+    var ramdom= Math.random()*1000000-100000;
+    ramdom=Math.floor(ramdom)
     console.log("email")
     console.log(req.body);
     var transport = nodemailer.createTransport({
