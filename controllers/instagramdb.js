@@ -9,8 +9,7 @@ const getusers = async (req, res) => {
         const email = req.body.email;
         const contrasena = req.body.password;
         client.connect();
-        
-        const response = await client.query('SELECT * FROM user_1 where email=$1',[email]).then(resp=>{
+        client.query('SELECT * FROM user_1 where email=$1',[email]).then(resp=>{
 
 console.log('pasa por aqui 2')
         console.log(response)
