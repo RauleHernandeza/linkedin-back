@@ -14,7 +14,7 @@ const validemail = async (req, res) => {
     var transport = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        secure:true,
+        secure:false,
         auth:{
             user: "robetorobatox186@gmail.com",
             pass: "uusboiemohifzmyw"
@@ -28,11 +28,11 @@ const validemail = async (req, res) => {
         from: "lindekin__",
         to: req.body.email,
         subject: "Registro",
-        text: "ingrese el siguiente valor si desea confirmar su cuenta de linkedin: " + ramdom
+        html: "ingrese el siguiente valor si desea confirmar su cuenta de linkedin: " + ramdom
     }
     console.log(mailoptions)
 
-    transport.sendMail(mailoptions, (error, info)=>{
+   await transport.sendMail(mailoptions, (error, info)=>{
         if(error){
             console.log(error)
             res.status(500).send("algun fallo")
@@ -40,7 +40,7 @@ const validemail = async (req, res) => {
 
         else {
             console.log("email enviado")
-            res.status(200).jsonp(req.body)
+            res.status(200).jsonp({codigo:ramdom})
         }
     })
 
