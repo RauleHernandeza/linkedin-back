@@ -17,7 +17,7 @@ const getusers = async(req, res) => {
         console.log('pasa por aqui 1')
         const email = req.body.email;
         const contrasena =   req.body.password
-       
+       client.connect();
       await client.query('SELECT * FROM user_1 where email=$1',[email]).then(response=>{
 
                   if(bcrypt.compareSync(contrasena,response.rows.password)){
@@ -25,9 +25,10 @@ const getusers = async(req, res) => {
                   }else {
                     res.send({status:400,message:"las contrasenas no coinciden"})   
                   }
+                  client.end();
         })
         .catch ((err)=>{
-          
+          client.end
             console.log(err)
             res.send({message:err})
         })
