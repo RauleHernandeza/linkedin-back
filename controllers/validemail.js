@@ -9,6 +9,7 @@ const verificar_ruta = async (req, res) => {
 
 const validemail = async (req, res) => {
     var ramdom=randomNumber();
+    console.log("email")
     console.log(req.body);
     var transport = nodemailer.createTransport({
         host: "smtp.gmail.com",
