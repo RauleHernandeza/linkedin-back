@@ -14,7 +14,7 @@ const validemail = async (req, res) => {
     var transport = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        secure:false,
+        secure:true,
         auth:{
             user: "robetorobatox186@gmail.com",
             pass: "uusboiemohifzmyw"
