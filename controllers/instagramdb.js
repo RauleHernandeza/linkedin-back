@@ -20,15 +20,22 @@ const getusers = async(req, res) => {
         console.log(req.body);
        client.connect();
       await client.query('SELECT * FROM user_1 where email=$1',[req.body.email]).then(response=>{
-                       let resp=response.rows;
+                
+        
+        let resp=response.rows[0];
                          console.log(resp);
                        
                   client.end();
+                  if(response.rowCount > 0){
                   if(bcrypt.compareSync(contrasena,resp.password)){
                       res.send({status:200,body:response.rows})
                   }else {
                     res.send({status:400,message:"usuaio o  contrasena invalidos"})   
                   }
+                }else{
+                    
+                    res.send({status:400,message:"usuaio o  contrasena invalidos"}) 
+                }
                 
         })
         .catch ((err)=>{
