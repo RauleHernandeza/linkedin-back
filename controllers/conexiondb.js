@@ -2,17 +2,20 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
     host: 'localhost',
-    user: 'Raul',
-    password: 'Raul',
-    database: 'conexion',
+    user: 'postgres',
+    password: 'admin',
+    database: 'linkedin',
     port: '5432' 
 })
 
-const getusers = async (req, res) => {
-    
+const p1 = async (req, res) => {
+    console.log('pase por aqui 1')
     try{
-    const response = await pool.query('SELECT * FROM usuario');
-    res.status(200).json(response.rows);
+    const res = await pool.query('SELECT * FROM usuario');
+    alert('pase por aqui')
+    console.log('pase por aqui 2')
+    console.warn('pase por aqui')
+    res.status(200).json(res.rows);
     }
     catch(err){
         res.send(err);
@@ -38,6 +41,6 @@ const postusers = async (req, res) => {
 }
 
 module.exports = {
-    getusers,
+    p1,
     postusers
 }
