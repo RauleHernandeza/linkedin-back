@@ -11,15 +11,15 @@ const client = new Client(
    }
     )
 
-const insert_attribute = async(req, res) => {
+const insert_education = async(req, res) => {
 
         const title = req.body.title;
-        const validated = req.body.validated;
+        const date_initial = req.body.date_initial;
         const id_user = req.body.id_user;
+        const id_university = req.body.id_university;
+        const date_ending = req.body.date_ending;
         client.connect();
-        
-        await client.query('insert into attribute (title, validated, id_user) values ($1, $2, $3)', [title, validated, id_user]).then(response=>{
-    
+        await client.query('insert into education (title, date-ending, date_initial, id_user, id_university) values ($1, $2, $3, $4, $5)', [title, date_ending, date_initial, id_user, id_university]).then(response=>{
         console.log(response.rows);
     
         })
@@ -34,15 +34,16 @@ const insert_attribute = async(req, res) => {
 
 }
 
-const update_attribute = async (req, res) => {
+const update_education = async (req, res) => {
     
    
         const title = req.body.title;
-        const validated = req.body.validated;
+        const date_initial = req.body.date_initial;
         const id_user = req.body.id_user;
+        const id_university = req.body.id_university;
+        const date_ending = req.body.date_ending;
         client.connect();
-        
-        await client.query('update attribute set title =$1, validated=$2 where id_user=$3', [title, validated, id_user]).then(response=>{
+        await client.query('update education set title=$1, date_ending=$2, date_initial=$3 where id_user=$4 and id_university=$5', [title, date_ending, date_initial, id_user, id_university]).then(response=>{
 
         console.log(response)
 
@@ -57,12 +58,12 @@ const update_attribute = async (req, res) => {
 
 
 
-const delete_attribute = async (req, res) => {
+const delete_education = async (req, res) => {
         
-    
         const id_user = req.body.id_user;
+        const id_university = req.body.id_university;
         client.connect();
-        await client.query('Delete attribute where id_user = $1', [id_user]).then(response=>{
+        await client.query('Delete education where id_user= $1 and id_university=$2', [id_user, id_university]).then(response=>{
         console.log(response.rows);
         console.log('todo bien')
 
@@ -77,7 +78,7 @@ const delete_attribute = async (req, res) => {
     
 
 module.exports = {
-    insert_attribute,
-    update_attribute,
-    delete_attribute
+    insert_education,
+    update_education,
+    delete_education
 }

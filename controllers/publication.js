@@ -11,60 +11,78 @@ const client = new Client(
    }
     )
 
-const getpubli = async(req, res) => {
-    
-   
-        console.log('pasa por aqui 1')
+    const insert_experience = async(req, res) => {
+
+        const post = req.body.post;
+        const date_initial = req.body.date_initial;
+        const enterprise = req.body.enterprise;
+        const description = req.body.description;
+        const date_ending = req.body.date_ending;
+        const actualy = req.body.actualy;
+        const id_user = req.body.id_user;
         client.connect();
-        await client.query('SELECT * FROM user_1').then(response=>{
-        console.log('pasa por aqui 2')        
-        let r=client
-        res.send({r})
-                
-        })
-        .catch ((err)=>{
-          
-            console.log(err)
-            res.send({message:err})
+        
+        await client.query('insert into experience (post, date_initial, enterprise, description, date_ending, actualy, id_user) values ($1, $2, $3, $4, $5, $6, $7)', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
+    
+        console.log(response.rows);
+    
         })
         
+        
+        .catch(err=>{
+            console.log(err)
+            res.send({status:500,message:err})
+        })
         
        
 
 }
 
-const postpubli = async (req, res) => {
+    const update_experience = async (req, res) => {
     
    
-    console.log(req.body);
-    const nombre = req.body.nombre;
-    const apellido = req.body.apellido;
-    const fecha_nac = req.body.fecha_nac;
-    const telefono = req.body.telefono;
-    const email = req.body.email;
-    const residencia_actual =parseInt( req.body.id_pais);
-    const contrasena = bcrypt.hashSync(req.body.password,10) ;
-    const languaje = "1"
-    const tipo_usuario = false;
-    client.connect();
-    
-    await client.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
+        const post = req.body.post;
+        const date_initial = req.body.date_initial;
+        const enterprise = req.body.enterprise;
+        const description = req.body.description;
+        const date_ending = req.body.date_ending;
+        const actualy = req.body.actualy;
+        const id_user = req.body.id_user;
+        client.connect();
+        
+        await client.query('update experience set post=$1, date_initial=$2, enterprise=$3, description=$4, date_ending=$5, actualy=$6 where id_user=$7', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
 
-    console.log(response.rows);
-    res.send({status:200,body:response.rows});
-    
-    console.log('todo bien')
+        console.log(response)
 
-    })
-    
-    
-    .catch(err=>{
-        console.log(err)
-        res.send({status:500,message:err})
-    })
+        })
+        
+        
+        .catch(err=>{
+            console.log(err)
+            res.send({status:500,message:err})
+        })
 }
 
+
+
+    const delete_experience = async (req, res) => {
+        
+        const id_user = req.body.id_user;
+        client.connect();
+        await client.query('Delete experience where id_user = $1', [id_user]).then(response=>{
+        console.log(response)
+        })
+        
+        
+        .catch(err=>{
+            console.log(err)
+            res.send({status:500,message:err})
+        })
+    }
+    
+
 module.exports = {
-    getpubli,
-    postpubli
+    insert_experience,
+    update_experience,
+    delete_experience
 }
