@@ -17,7 +17,7 @@ const insert_aptitudes = async(req, res) => {
         const id_user = req.body.id_user;
         
         client.connect();
-        await client.query('insert into aptitudes (title, id_user) values ($1, $2) returning *', [title,id_user]).then(response=>{
+        await client.query('insert into attribute (title, id_user) values ($1, $2) returning *', [title,id_user]).then(response=>{
         console.log(response.rows);
     
         res.send({status:200,body:response.rows[0]})
