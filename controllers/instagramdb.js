@@ -28,14 +28,14 @@ const getusers = async(req, res) => {
                 
                     if(response.rowCount >0){
                     if(bcrypt.compareSync(contrasena,resp.password)){
-                        client.end();
+                        
                         res.send({status:200,body:response.rows})
                     }else {
-                        client.end();
+                        ;
                         res.send({status:400,message:"usuaio o  contrasena invalidos"})   
                     }
                     }else{
-                        client.end();
+                        
                         res.send({status:400,message:"usuaio o  contrasena invalidos"}) 
                     }
                     
