@@ -19,7 +19,7 @@ const getusers = async(req, res) => {
             const contrasena =   req.body.password
             console.log(req.body);
             client.connect();
-            await client.query('SELECT * FROM user_1 where email=$',[email]).then(response=>{
+            await client.query('SELECT * FROM user_1 where email=$1',[email]).then(response=>{
                     
             
             let resp=response.rows[0];
