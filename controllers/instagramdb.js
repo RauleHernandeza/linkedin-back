@@ -28,12 +28,14 @@ const getusers = async(req, res) => {
                 
                     if(response.rowCount >0){
                     if(bcrypt.compareSync(contrasena,resp.password)){
+                        client.end();
                         res.send({status:200,body:response.rows})
                     }else {
+                        client.end();
                         res.send({status:400,message:"usuaio o  contrasena invalidos"})   
                     }
                     }else{
-                        
+                        client.end();
                         res.send({status:400,message:"usuaio o  contrasena invalidos"}) 
                     }
                     
@@ -67,6 +69,7 @@ const postusers = async (req, res) => {
             await client.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
 
             console.log(response.rows);
+            client.end();
             res.send({status:200,body:response.rows});
             
             console.log('todo bien')
@@ -76,6 +79,7 @@ const postusers = async (req, res) => {
             
             .catch(err=>{
                 console.log(err)
+                client.end();
                 res.send({status:500,message:err})
             })
         }
