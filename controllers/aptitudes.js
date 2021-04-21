@@ -76,6 +76,7 @@ const delete_aptitudes = async (req, res) => {
        }
         )
         const id_aptitudes = req.body.id_aptitudes;
+        console.log(id_aptitudes)
         client.connect();
         await client.query('Delete attribute where id_attribute=$1', [id_aptitudes]).then(response=>{
           console.log(response.rows);
