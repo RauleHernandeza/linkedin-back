@@ -70,6 +70,7 @@ const update_experience = async (req, res) => {
         
         .catch(err=>{
             console.log(err)
+            client.end();
             res.send({status:500,message:err})
         })
 }
@@ -92,6 +93,7 @@ const delete_experience = async (req, res) => {
         await client.query('Delete from experience where id_experience=$1', [id_expericence]).then(response=>{
           console.log(response.rows);
         console.log('todo bien')
+        client.end();
                   res.send({status:200})
         })
         
