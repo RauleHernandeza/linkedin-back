@@ -2,7 +2,7 @@ const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
 
 
-const insert_education = async(req, res) => {
+const insert_experience = async(req, res) => {
     const client = new Client(
     
         {connectionString:
@@ -13,21 +13,24 @@ const insert_education = async(req, res) => {
     
        }
         )
-        const title = req.body.title;
+        const post = req.body.post;
         const date_initial = req.body.date_initial;
         const id_user = req.body.id_user;
-        const id_university = req.body.university;
+        const enterprise = req.body.enterprise;
         const date_ending = req.body.date_ending;
+        const description=req.body.description;
+        const actualy=req.body.actualy;
+        const shedule=req.body.shedule;
+
         client.connect();
-        await client.query('insert into education (title, date-ending, date_initial, id_user, university) values ($1, $2, $3, $4, $5) returning *', [title, date_ending, date_initial, id_user, id_university]).then(response=>{
+        await client.query('insert into experience (post,date_initial,date_ending,enterprise,description,actually,id_user,schedule) values ($1, $2, $3, $4, $5,$6,$7,$8) returning *', [post,date_initial,date_ending,enterprise,description,actualy,id_user,shedule]).then(response=>{
         console.log(response.rows);
         client.end();
         res.send({status:200,body:response.rows[0]})
         })
         
         
-        .catch(err=>{
-            client.end();
+        .catch(err=>{client.end();
             console.log(err)
             res.send({status:500,message:err})
         })
@@ -36,7 +39,7 @@ const insert_education = async(req, res) => {
 
 }
 
-const update_education = async (req, res) => {
+const update_experience = async (req, res) => {
     const client = new Client(
     
         {connectionString:
@@ -48,13 +51,16 @@ const update_education = async (req, res) => {
        }
         )
    
-        const title = req.body.title;
-        const date_initial = req.body.date_initial;
-        const id_user = req.body.id_education;
-        const id_university = req.body.university;
-        const date_ending = req.body.date_ending;
+    const post = req.body.post;
+    const date_initial = req.body.date_initial;
+    const id_experience = req.body.id_experience;
+    const enterprise = req.body.enterprise;
+    const date_ending = req.body.date_ending;
+    const description=req.body.description;
+    const actualy=req.body.actualy;
+    const shedule=req.body.schedule;
         client.connect();
-        await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education', [title, date_ending, date_initial,id_university , id_user]).then(response=>{
+        await client.query('update experience set post=$1, date_ending=$2, date_initial=$3,enterprise=$4,description=$5,schedule=$6,actually=$7 where id_experience=$8' ,[post, date_ending, date_initial,enterprise , description,shedule,actualy,id_experience]).then(response=>{
       
           console.log(response)
           client.end();
@@ -63,7 +69,6 @@ const update_education = async (req, res) => {
         
         
         .catch(err=>{
-            client.end();
             console.log(err)
             res.send({status:500,message:err})
         })
@@ -71,7 +76,7 @@ const update_education = async (req, res) => {
 
 
 
-const delete_education = async (req, res) => {
+const delete_experience = async (req, res) => {
     const client = new Client(
     
         {connectionString:
@@ -82,26 +87,25 @@ const delete_education = async (req, res) => {
     
        }
         )
-        const id_user = req.body.id_education;
+        const id_expericence = req.body.id_experience;
         client.connect();
-        await client.query('Delete education where id_education', [id_user]).then(response=>{
+        await client.query('Delete experience where id_experience', [id_expericence]).then(response=>{
           console.log(response.rows);
         console.log('todo bien')
-        client.end();
                   res.send({status:200})
         })
         
         
         .catch(err=>{
-            console.log(err)
             client.end();
+            console.log(err)
             res.send({status:500,message:err})
         })
     }
     
 
 module.exports = {
-    insert_education,
-    update_education,
-    delete_education
+    insert_experience,
+    update_experience,
+    delete_experience
 }

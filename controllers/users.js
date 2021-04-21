@@ -1,17 +1,17 @@
 const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
-const client = new Client(
-    
-    {connectionString:
-      "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
-      ssl:{
-          rejectUnauthorized:false
-      }
-
-   }
-    )
 
 const getusers = async(req, res) => {
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
     
     
             console.log('pasa por aqui 1')
@@ -19,17 +19,19 @@ const getusers = async(req, res) => {
             const contrasena =   req.body.password
             console.log(req.body);
             client.connect();
-            await client.query('SELECT * FROM user_1 where email=$1 returning *',[email]).then(response=>{
+            await client.query('SELECT * FROM user_1 where email=$1',[email]).then(response=>{
                     
             
             let resp=response.rows[0];
                         console.log(resp);
                         console.log(response.rows)               
-                
+                        client.end();
                     if(response.rowCount >0){
                     if(bcrypt.compareSync(contrasena,resp.password)){
+                        
                         res.send({status:200,body:response.rows})
                     }else {
+                        ;
                         res.send({status:400,message:"usuaio o  contrasena invalidos"})   
                     }
                     }else{
@@ -51,7 +53,17 @@ const getusers = async(req, res) => {
 
 const postusers = async (req, res) => {
     
-        
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
+    
             console.log(req.body);
             const nombre = req.body.nombre;
             const apellido = req.body.apellido;
@@ -67,6 +79,7 @@ const postusers = async (req, res) => {
             await client.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
 
             console.log(response.rows);
+            client.end();
             res.send({status:200,body:response.rows});
             
             console.log('todo bien')
@@ -76,6 +89,7 @@ const postusers = async (req, res) => {
             
             .catch(err=>{
                 console.log(err)
+                client.end();
                 res.send({status:500,message:err})
             })
         }
@@ -101,6 +115,7 @@ const updateusers = async (req, res) => {
             await client.query('update user_1 set curriculum =$1, name=$2, type_user=$3, phone=$4, email=$5, password=$6, photo_profile=$7, languaje=$8, lastname=$9, birth_date=$10, id_country=$11 where email =$5', [curriculum, nombre, tipo_usuario, telefono, email, contrasena, foto, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
 
             console.log(response.rows);
+            client.end();
             res.send({status:200,body:response.rows});
             
             console.log('todo bien')

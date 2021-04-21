@@ -2,7 +2,7 @@ const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
 
 
-const insert_education = async(req, res) => {
+const insert_aptitudes = async(req, res) => {
     const client = new Client(
     
         {connectionString:
@@ -14,12 +14,10 @@ const insert_education = async(req, res) => {
        }
         )
         const title = req.body.title;
-        const date_initial = req.body.date_initial;
         const id_user = req.body.id_user;
-        const id_university = req.body.university;
-        const date_ending = req.body.date_ending;
+        
         client.connect();
-        await client.query('insert into education (title, date-ending, date_initial, id_user, university) values ($1, $2, $3, $4, $5) returning *', [title, date_ending, date_initial, id_user, id_university]).then(response=>{
+        await client.query('insert into attribute (title, id_user) values ($1, $2) returning *', [title,id_user]).then(response=>{
         console.log(response.rows);
         client.end();
         res.send({status:200,body:response.rows[0]})
@@ -36,7 +34,8 @@ const insert_education = async(req, res) => {
 
 }
 
-const update_education = async (req, res) => {
+const update_aptitudes = async (req, res) => {
+    
     const client = new Client(
     
         {connectionString:
@@ -47,14 +46,10 @@ const update_education = async (req, res) => {
     
        }
         )
-   
         const title = req.body.title;
-        const date_initial = req.body.date_initial;
-        const id_user = req.body.id_education;
-        const id_university = req.body.university;
-        const date_ending = req.body.date_ending;
+       
         client.connect();
-        await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education', [title, date_ending, date_initial,id_university , id_user]).then(response=>{
+        await client.query('update atribute set title=$1 where id_atribute=$2', [title ,id_aptitudes]).then(response=>{
       
           console.log(response)
           client.end();
@@ -71,7 +66,7 @@ const update_education = async (req, res) => {
 
 
 
-const delete_education = async (req, res) => {
+const delete_aptitudes = async (req, res) => {
     const client = new Client(
     
         {connectionString:
@@ -82,9 +77,10 @@ const delete_education = async (req, res) => {
     
        }
         )
-        const id_user = req.body.id_education;
+        const id_aptitudes = req.body.id_attribute;
+        console.log(id_aptitudes)
         client.connect();
-        await client.query('Delete education where id_education', [id_user]).then(response=>{
+        await client.query('Delete from  attribute where id_attribute=$1', [id_aptitudes]).then(response=>{
           console.log(response.rows);
         console.log('todo bien')
         client.end();
@@ -93,15 +89,15 @@ const delete_education = async (req, res) => {
         
         
         .catch(err=>{
-            console.log(err)
             client.end();
+            console.log(err)
             res.send({status:500,message:err})
         })
     }
     
 
 module.exports = {
-    insert_education,
-    update_education,
-    delete_education
+    insert_aptitudes,
+    update_aptitudes,
+    delete_aptitudes
 }
