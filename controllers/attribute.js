@@ -1,5 +1,4 @@
 const { Client } = require('pg');
-const bcrypt =require('bcryptjs')
 const client = new Client(
     
     {connectionString:
@@ -17,7 +16,7 @@ const insert_attribute = async(req, res) => {
         const validated = req.body.validated;
         const id_user = req.body.id_user;
         client.connect();
-        
+
         await client.query('insert into attribute (title, validated, id_user) values ($1, $2, $3)', [title, validated, id_user]).then(response=>{
     
         console.log(response.rows);

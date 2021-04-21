@@ -1,5 +1,4 @@
 const { Client } = require('pg');
-const bcrypt =require('bcryptjs')
 const client = new Client(
     
     {connectionString:
