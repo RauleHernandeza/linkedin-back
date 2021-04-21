@@ -1,18 +1,18 @@
 const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
-const client = new Client(
-    
-    {connectionString:
-      "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
-      ssl:{
-          rejectUnauthorized:false
-      }
 
-   }
-    )
 
 const insert_aptitudes = async(req, res) => {
-
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
         const title = req.body.title;
         const id_user = req.body.id_user;
         
@@ -35,7 +35,16 @@ const insert_aptitudes = async(req, res) => {
 
 const update_aptitudes = async (req, res) => {
     
-   
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
         const title = req.body.title;
       
         client.connect();
@@ -56,7 +65,16 @@ const update_aptitudes = async (req, res) => {
 
 
 const delete_aptitudes = async (req, res) => {
-        
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
         const id_aptitudes = req.body.aptitudes;
         client.connect();
         await client.query('Delete attribute where id_attribute=$1', [id_aptitudes]).then(response=>{

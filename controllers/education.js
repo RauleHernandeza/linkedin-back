@@ -1,18 +1,18 @@
 const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
-const client = new Client(
-    
-    {connectionString:
-      "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
-      ssl:{
-          rejectUnauthorized:false
-      }
 
-   }
-    )
 
 const insert_education = async(req, res) => {
-
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
         const title = req.body.title;
         const date_initial = req.body.date_initial;
         const id_user = req.body.id_user;
@@ -36,7 +36,16 @@ const insert_education = async(req, res) => {
 }
 
 const update_education = async (req, res) => {
+    const client = new Client(
     
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
    
         const title = req.body.title;
         const date_initial = req.body.date_initial;
@@ -61,7 +70,16 @@ const update_education = async (req, res) => {
 
 
 const delete_education = async (req, res) => {
-        
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
         const id_user = req.body.id_education;
         client.connect();
         await client.query('Delete education where id_education', [id_user]).then(response=>{
