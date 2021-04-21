@@ -1,17 +1,17 @@
 const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
-const client = new Client(
-    
-    {connectionString:
-      "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
-      ssl:{
-          rejectUnauthorized:false
-      }
-
-   }
-    )
 
 const getusers = async(req, res) => {
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
     
     
             console.log('pasa por aqui 1')
@@ -53,7 +53,17 @@ const getusers = async(req, res) => {
 
 const postusers = async (req, res) => {
     
-        
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
+    
             console.log(req.body);
             const nombre = req.body.nombre;
             const apellido = req.body.apellido;
