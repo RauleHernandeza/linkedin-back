@@ -89,7 +89,7 @@ const delete_experience = async (req, res) => {
         )
         const id_expericence = req.body.id_experience;
         client.connect();
-        await client.query('Delete experience where id_experience', [id_expericence]).then(response=>{
+        await client.query('Delete from experience where id_experience', [id_expericence]).then(response=>{
           console.log(response.rows);
         console.log('todo bien')
                   res.send({status:200})
