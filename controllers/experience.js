@@ -20,7 +20,7 @@ const insert_experience = async(req, res) => {
         const date_ending = req.body.date_ending;
         const description=req.body.description;
         const actualy=req.body.actualy;
-        const shedule=req.body.shedule;
+        const shedule=req.body.schedule;
 
         client.connect();
         await client.query('insert into experience (post,date_initial,date_ending,enterprise,description,actually,id_user,schedule) values ($1, $2, $3, $4, $5,$6,$7,$8) returning *', [post,date_initial,date_ending,enterprise,description,actualy,id_user,shedule]).then(response=>{
