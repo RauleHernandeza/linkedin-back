@@ -46,7 +46,7 @@ const update_aptitudes = async (req, res) => {
        }
         )
         const title = req.body.title;
-      
+       
         client.connect();
         await client.query('update atribute set title=$1 where id_atribute=$2', [title ,id_aptitudes]).then(response=>{
       
@@ -75,7 +75,7 @@ const delete_aptitudes = async (req, res) => {
     
        }
         )
-        const id_aptitudes = req.body.aptitudes;
+        const id_aptitudes = req.body.id_aptitudes;
         client.connect();
         await client.query('Delete attribute where id_attribute=$1', [id_aptitudes]).then(response=>{
           console.log(response.rows);
