@@ -21,12 +21,13 @@ const insert_education = async(req, res) => {
         client.connect();
         await client.query('insert into education (title, date-ending, date_initial, id_user, university) values ($1, $2, $3, $4, $5) returning *', [title, date_ending, date_initial, id_user, id_university]).then(response=>{
         console.log(response.rows);
-    
+        client.end();
         res.send({status:200,body:response.rows[0]})
         })
         
         
         .catch(err=>{
+            client.end();
             console.log(err)
             res.send({status:500,message:err})
         })
@@ -56,12 +57,13 @@ const update_education = async (req, res) => {
         await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education', [title, date_ending, date_initial,id_university , id_user]).then(response=>{
       
           console.log(response)
-               
+          client.end();
           res.send({status:200})
         })
         
         
         .catch(err=>{
+            client.end();
             console.log(err)
             res.send({status:500,message:err})
         })
@@ -85,12 +87,14 @@ const delete_education = async (req, res) => {
         await client.query('Delete education where id_education', [id_user]).then(response=>{
           console.log(response.rows);
         console.log('todo bien')
+        client.end();
                   res.send({status:200})
         })
         
         
         .catch(err=>{
             console.log(err)
+            client.end();
             res.send({status:500,message:err})
         })
     }

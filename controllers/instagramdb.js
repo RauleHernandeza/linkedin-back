@@ -25,7 +25,7 @@ const getusers = async(req, res) => {
             let resp=response.rows[0];
                         console.log(resp);
                         console.log(response.rows)               
-                
+                        client.end();
                     if(response.rowCount >0){
                     if(bcrypt.compareSync(contrasena,resp.password)){
                         
@@ -115,6 +115,7 @@ const updateusers = async (req, res) => {
             await client.query('update user_1 set curriculum =$1, name=$2, type_user=$3, phone=$4, email=$5, password=$6, photo_profile=$7, languaje=$8, lastname=$9, birth_date=$10, id_country=$11 where email =$5', [curriculum, nombre, tipo_usuario, telefono, email, contrasena, foto, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
 
             console.log(response.rows);
+            client.end();
             res.send({status:200,body:response.rows});
             
             console.log('todo bien')

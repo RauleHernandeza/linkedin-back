@@ -25,12 +25,12 @@ const insert_experience = async(req, res) => {
         client.connect();
         await client.query('insert into experience (post,date_initial,date_ending,enterprise,description,actually,id_user,schedule) values ($1, $2, $3, $4, $5,$6,$7,$8) returning *', [post,date_initial,date_ending,enterprise,description,actualy,id_user,shedule]).then(response=>{
         console.log(response.rows);
-    
+        client.end();
         res.send({status:200,body:response.rows[0]})
         })
         
         
-        .catch(err=>{
+        .catch(err=>{client.end();
             console.log(err)
             res.send({status:500,message:err})
         })
@@ -63,7 +63,7 @@ const update_experience = async (req, res) => {
         await client.query('update experience set post=$1, date_ending=$2, date_initial=$3,enterprise=$4,description=$5,schedule=$6,actually=$7 where id_experience=$8' ,[post, date_ending, date_initial,enterprise , description,shedule,actualy,id_experience]).then(response=>{
       
           console.log(response)
-               
+          client.end();
           res.send({status:200})
         })
         
@@ -97,6 +97,7 @@ const delete_experience = async (req, res) => {
         
         
         .catch(err=>{
+            client.end();
             console.log(err)
             res.send({status:500,message:err})
         })
