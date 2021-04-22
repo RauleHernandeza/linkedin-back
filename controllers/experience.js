@@ -19,7 +19,7 @@ const insert_experience = async(req, res) => {
         const enterprise = req.body.enterprise;
         const date_ending = req.body.date_ending;
         const description=req.body.description;
-        const actualy=req.body.actualy;
+        const actualy=req.body.actually;
         const shedule=req.body.schedule;
 
         client.connect();
@@ -57,7 +57,7 @@ const update_experience = async (req, res) => {
     const enterprise = req.body.enterprise;
     const date_ending = req.body.date_ending;
     const description=req.body.description;
-    const actualy=req.body.actualy;
+    const actualy=req.body.actually;
     const shedule=req.body.schedule;
         client.connect();
         await client.query('update experience set post=$1, date_ending=$2, date_initial=$3,enterprise=$4,description=$5,schedule=$6,actually=$7 where id_experience=$8' ,[post, date_ending, date_initial,enterprise , description,shedule,actualy,id_experience]).then(response=>{
