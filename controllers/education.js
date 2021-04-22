@@ -54,7 +54,7 @@ const update_education = async (req, res) => {
         const id_university = req.body.universidad;
         const date_ending = req.body.date_ending;
         client.connect();
-        await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education', [title, date_ending, date_initial,id_university , id_user]).then(response=>{
+        await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education=$5', [title, date_ending, date_initial,id_university , id_user]).then(response=>{
       
           console.log(response)
           client.end();
