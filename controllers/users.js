@@ -28,15 +28,16 @@ const getusers = async(req, res) => {
                         client.end();
                     if(response.rowCount >0){
                     if(bcrypt.compareSync(contrasena,resp.password)){
-                        
                         res.send({status:200,body:response.rows})
                     }else {
-                        ;
-                        res.send({status:400,message:"usuaio o  contrasena invalidos"})   
+        
+                        res.send({status:400,message:"usuaio o  contrasena invalidos"})
+                        client.end();   
                     }
                     }else{
                         
-                        res.send({status:400,message:"usuaio o  contrasena invalidos"}) 
+                        res.send({status:400,message:"usuaio o  contrasena invalidos"})
+                        client.end(); 
                     }
                     
             })
@@ -77,13 +78,10 @@ const postusers = async (req, res) => {
             client.connect();
             
             await client.query('insert into user_1 (name, type_user, phone, email, password, languaje, lastname, birth_date, id_country) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *', [nombre, tipo_usuario, telefono, email, contrasena, languaje, apellido, fecha_nac, residencia_actual]).then(response=>{
-
             console.log(response.rows);
             client.end();
             res.send({status:200,body:response.rows});
-            
             console.log('todo bien')
-
             })
             
             
@@ -96,6 +94,17 @@ const postusers = async (req, res) => {
 
 
 const updateusers = async (req, res) => {
+
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
     
    
             console.log(req.body);
@@ -117,7 +126,6 @@ const updateusers = async (req, res) => {
             console.log(response.rows);
             client.end();
             res.send({status:200,body:response.rows});
-            
             console.log('todo bien')
 
             })
@@ -125,23 +133,33 @@ const updateusers = async (req, res) => {
             
             .catch(err=>{
                 console.log(err)
+                client.end();
                 res.send({status:500,message:err})
             })
         }
 
 const deleteusers = async (req, res) => {
+
+    const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
     
    
             console.log(req.body);
             const email = req.body.email;
             const contrasena = bcrypt.hashSync(req.body.password,10) ;
             client.connect();
-            
             await client.query('Delete from user_1 where email = $1 and password = $2', [email, contrasena]).then(response=>{
-
             console.log(response.rows);
             res.send({status:200,body:response.rows});
-            
+            client.end();
             console.log('todo bien')
 
             })
@@ -149,37 +167,15 @@ const deleteusers = async (req, res) => {
             
             .catch(err=>{
                 console.log(err)
+                client.end();
                 res.send({status:500,message:err})
             })
         }
-
-const getdata = async (req, res) => {
-
-            client.connect();
-            await client.query('select * from user_1').then(response=>{
-
-            //console.log(response);
-            let a= response.rows;
-            console.log(a);
-            res.send({a});
-            
-            console.log('todo bien')
-        
-            })
-            
-            
-            .catch(err=>{
-                console.log(err)
-                res.send({status:500,message:err})
-            })
-
-}
 
 
 module.exports = {
     getusers,
     postusers,
     updateusers,
-    deleteusers,
-    getdata
+    deleteusers
 }
