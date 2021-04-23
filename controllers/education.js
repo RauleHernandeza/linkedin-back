@@ -50,11 +50,11 @@ const update_education = async (req, res) => {
    
         const title = req.body.title;
         const date_initial = req.body.date_initial;
-        const id_user = req.body.id_education;
+        const id_education = req.body.id_education;
         const id_university = req.body.university;
         const date_ending = req.body.date_ending;
         client.connect();
-        await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education=$5', [title, date_ending, date_initial,id_university , id_user]).then(response=>{
+        await client.query('update education set title=$1, date_ending=$2, date_initial=$3,university=$4 where id_education=$5', [title, date_ending, date_initial,id_university , id_education]).then(response=>{
       
           console.log(response)
           client.end();
@@ -82,9 +82,9 @@ const delete_education = async (req, res) => {
     
        }
         )
-        const id_user = req.body.id_education;
+        const id_education = req.body.id_education;
         client.connect();
-        await client.query('Delete education where id_education', [id_user]).then(response=>{
+        await client.query('Delete from education where id_education=$1', [id_education]).then(response=>{
           console.log(response.rows);
         console.log('todo bien')
         client.end();

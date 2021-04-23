@@ -47,7 +47,7 @@ const update_aptitudes = async (req, res) => {
        }
         )
         const title = req.body.title;
-       
+        const id_aptitudes = req.body.id_aptitudes;
         client.connect();
         await client.query('update atribute set title=$1 where id_atribute=$2', [title ,id_aptitudes]).then(response=>{
       

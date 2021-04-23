@@ -68,7 +68,7 @@ const delete_enterprise = async (req, res) => {
         
         const id_enterprise = req.body.id_enterprise;
         client.connect();
-        await client.query('Delete enterprise where id_enterprise= $1', [id_enterprise]).then(response=>{
+        await client.query('Delete from enterprise where id_enterprise= $1', [id_enterprise]).then(response=>{
         console.log(response.rows);
         console.log('todo bien')
         client.end()

@@ -13,16 +13,14 @@ const client = new Client(
 
     const insert_post = async(req, res) => {
 
-        const post = req.body.post;
-        const date_initial = req.body.date_initial;
-        const enterprise = req.body.enterprise;
-        const description = req.body.description;
-        const date_ending = req.body.date_ending;
-        const actualy = req.body.actualy;
+        const content = req.body.content;
+        const title = req.body.title;
+        const date = req.body.date;
+        const image = req.body.image;
         const id_user = req.body.id_user;
         client.connect();
         
-        await client.query('insert into post (id_post, date_initial, enterprise, description, date_ending, actualy, id_user) values ($1, $2, $3, $4, $5, $6, $7)', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
+        await client.query('insert into post (content, title, date, image, id_user) values ($1, $2, $3, $4, $5) returning *', [content, title, date, image, id_user]).then(response=>{
     
         console.log(response.rows);
         client.end();
@@ -42,16 +40,14 @@ const client = new Client(
     const update_post = async (req, res) => {
     
    
-        const post = req.body.post;
-        const date_initial = req.body.date_initial;
-        const enterprise = req.body.enterprise;
-        const description = req.body.description;
-        const date_ending = req.body.date_ending;
-        const actualy = req.body.actualy;
+        const content = req.body.content;
+        const title = req.body.title;
+        const date = req.body.date;
+        const image = req.body.image;
         const id_user = req.body.id_user;
         client.connect();
         
-        await client.query('update experience set post=$1, date_initial=$2, enterprise=$3, description=$4, date_ending=$5, actualy=$6 where id_user=$7', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
+        await client.query('update post set content=$1, date_initial=$2, enterprise=$3, description=$4, date_ending=$5, actualy=$6 where id_user=$7', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
 
         console.log(response)
 
