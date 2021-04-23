@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
-var a, b
+var a, b, y
 
 const navegator = async (req, res) => {
 
@@ -62,7 +62,7 @@ const navegator = async (req, res) => {
                 console.log(dd)
                 client.connect();
                 await client.query('select * from enterprise where title like $1', [dd]).then(response=>{
-                let y= response.rows
+                y= response.rows
                 console.log(y);
                 res.send({y});
                 console.log('todo bien')
@@ -77,6 +77,10 @@ const navegator = async (req, res) => {
                     console.log('algo mal')
                     client.end();
                 })
+
+                let prueba= y[0].title
+                prueba = {prueba, a:y[0].email}
+                console.log(prueba)
             }
 
 

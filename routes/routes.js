@@ -10,6 +10,7 @@ const { get_main_page } = require('../controllers/main_page')
 const { navegator, select_enterprise } = require('../controllers/navegator')
 
 
+
 router.post('/login', getusers )
 router.post('/registro', postusers)
 router.post('/update', updateusers)
@@ -31,7 +32,7 @@ router.post('/insert_enterprise', insert_enterprise)
 router.post('/update_enterprise', update_enterprise)
 router.post('/delete_enterprise', delete_enterprise)
 
-router.get('/getdata', get_main_page)
+router.post('/getdata', get_main_page)
 
 router.get('/navegator', navegator)
 router.get('/select_enterprise', select_enterprise)
