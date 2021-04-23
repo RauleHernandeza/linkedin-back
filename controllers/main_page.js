@@ -51,7 +51,7 @@ const get_main_page = async (req, res) => {
                     user= {id_user:a[0].id_user, name:a[0].name, lastname:a[0].lastname, phone:a[0].phone, email:a[0].email, photo_profile:a[0].photo_profile, birth_date:a[0].birth_date, id_country:a[0].id_country, aptitudes:d, education:c, experience:b}
                     //user= {user, aptitudes:d, education:c, experience:b}
                     console.log(user)
-                    res.send({user});
+                    res.send({status:200,body:user});
                     console.log('todo bien 4')
                     })
                     .catch(err=>{
