@@ -99,10 +99,38 @@ const { Client } = require('pg');
             client.end();
         })
     }
+
+    const insert_image = async(req, res) => {
+
+        const client = new Client(
+    
+            {connectionString:
+              "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+              ssl:{
+                  rejectUnauthorized:false
+              }
+        
+           }
+            )
+
+        const content = 'papa';
+        const title = 'papita';
+        const date = '03-10-2021';
+        const image = req.body.photo_profile;
+        const id_user = 1;
+        client.connect();
+        
+        await client.query('insert into post (content, title, date, image, id_user) values ($1, $2, $3, $4, $5) returning *', [content, title, date, image, id_user]).then(response=>{
+    
+        console.log(response.rows);
+        client.end();
+        })
+}
     
 
 module.exports = {
     insert_post,
     update_post,
-    delete_post
+    delete_post,
+    insert_image
 }
