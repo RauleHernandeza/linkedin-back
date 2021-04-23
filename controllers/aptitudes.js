@@ -1,6 +1,4 @@
 const { Client } = require('pg');
-const bcrypt =require('bcryptjs')
-
 
 const insert_aptitudes = async(req, res) => {
     const client = new Client(

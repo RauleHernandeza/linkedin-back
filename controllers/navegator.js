@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 const bcrypt =require('bcryptjs')
-var a, b, y
+var a, b, y, c
 
 const navegator = async (req, res) => {
 
@@ -17,6 +17,8 @@ const navegator = async (req, res) => {
             const phone = req.body.phone;
             const titles = req.body.title;
             const title = '%' + titles + '%'
+            const names = req.body.name;
+            const name = '%' + names + '%'
             client.connect();
             await client.query('select * from user_1 where phone =$1', [phone]).then(response=>{
                     a= response.rows;
@@ -33,14 +35,25 @@ const navegator = async (req, res) => {
                     b= response.rows;
                     console.log(b);
                     console.log('todo bien 2')
-                    res.send({a, b});
-                    client.end();
                     })
                     .catch(err=>{
                         console.log(err)
                         res.send({status:500,message:err})
                         client.end();
                     })
+
+                await client.query('select * from user_1 where name $1', [name]).then(response=>{
+                    c= response.rows;
+                    console.log(c)
+                    console.log('todo bien 3')
+                    res.send({a, b, c});
+                    client.end();
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                        res.send({status:500,message:err})
+                        client.end();
+                    })    
             
 }
 

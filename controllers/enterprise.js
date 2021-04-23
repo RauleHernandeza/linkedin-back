@@ -1,17 +1,17 @@
 const { Client } = require('pg');
-const bcrypt =require('bcryptjs')
-const client = new Client(
-    
-    {connectionString:
-      "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
-      ssl:{
-          rejectUnauthorized:false
-      }
-
-   }
-    )
 
 const insert_enterprise = async(req, res) => {
+
+        const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
 
         const url_web = req.body.url_web;
         const title = req.body.title;
@@ -38,6 +38,17 @@ const insert_enterprise = async(req, res) => {
 }
 
 const update_enterprise = async (req, res) => {
+
+        const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
       
         const url_web = req.body.url_web;
         const title = req.body.title;
@@ -65,6 +76,17 @@ const update_enterprise = async (req, res) => {
 
 
 const delete_enterprise = async (req, res) => {
+
+        const client = new Client(
+    
+        {connectionString:
+          "postgres://rzgaumbv:BigyVukCq6eoDlNDtnsoMcikb2YWhN0d@queenie.db.elephantsql.com:5432/rzgaumbv",
+          ssl:{
+              rejectUnauthorized:false
+          }
+    
+       }
+        )
         
         const id_enterprise = req.body.id_enterprise;
         client.connect();

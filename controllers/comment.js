@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-    const insert_reaction = async(req, res) => {
+    const insert_comment = async(req, res) => {
 
         const client = new Client(
     
@@ -13,10 +13,12 @@ const { Client } = require('pg');
            }
             )
 
-        const description = req.body.description;
+        const coment = req.body.coment;
+        const date = req.body.date;
+        const id_user = req.body.id_user;
+        const id_post = req.body.id_post;
         client.connect();
-        await client.query('insert into reaction (description) values ($1) returning *', [description]).then(response=>{
-    
+        await client.query('insert into comment (coment, date, id_user, id_post) values ($1, $2, $3, $4) returning *', [coment, date, id_user, id_post]).then(response=>{
         console.log(response.rows);
         client.end();
         })
@@ -32,7 +34,7 @@ const { Client } = require('pg');
 
 }
 
-    const update_reaction = async (req, res) => {
+    const update_comment = async (req, res) => {
 
         const client = new Client(
     
@@ -45,11 +47,13 @@ const { Client } = require('pg');
            }
             )
     
-        const description = req.body.description;
-        const id_reaction = req.body.id_reaction;
+        const coment = req.body.coment;
+        const date = req.body.date;
+        const id_comment = req.body.id_comment;
+        
         client.connect();
         
-        await client.query('update reaction set description=$1 where id_reaction=$2', [description, id_reaction]).then(response=>{
+        await client.query('update comment set coment=$1, date=$2 where id_comment=$3', [coment, date, id_comment]).then(response=>{
         console.log(response)
         client.end();
         })
@@ -64,7 +68,7 @@ const { Client } = require('pg');
 
 
 
-    const delete_reaction = async (req, res) => {
+    const delete_comment = async (req, res) => {
 
         const client = new Client(
     
@@ -77,9 +81,9 @@ const { Client } = require('pg');
            }
             )
         
-        const id_reaction = req.body.id_reaction;
+        const id_comment = req.body.id_comment;
         client.connect();
-        await client.query('Delete from reaction where id_reaction = $1', [id_reaction]).then(response=>{
+        await client.query('Delete from comment where id_comment = $1', [id_comment]).then(response=>{
         console.log(response)
         client.end();
         })
@@ -94,7 +98,7 @@ const { Client } = require('pg');
     
 
 module.exports = {
-    insert_reaction,
-    update_reaction,
-    delete_reaction
+    insert_comment,
+    update_comment,
+    delete_comment
 }
