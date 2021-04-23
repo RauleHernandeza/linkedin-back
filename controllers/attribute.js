@@ -17,14 +17,15 @@ const insert_attribute = async(req, res) => {
         const id_user = req.body.id_user;
         client.connect();
 
-        await client.query('insert into attribute (title, validated, id_user) values ($1, $2, $3)', [title, validated, id_user]).then(response=>{
+        await client.query('insert into attribute (title, validated, id_user) values ($1, $2, $3) returning *', [title, validated, id_user]).then(response=>{
     
         console.log(response.rows);
-    
+        client.end()
         })
         
         
         .catch(err=>{
+            client.end()
             console.log(err)
             res.send({status:500,message:err})
         })
@@ -42,7 +43,7 @@ const update_attribute = async (req, res) => {
         client.connect();
         
         await client.query('update attribute set title =$1, validated=$2 where id_user=$3', [title, validated, id_user]).then(response=>{
-
+        client.end()
         console.log(response)
 
         })
@@ -64,12 +65,13 @@ const delete_attribute = async (req, res) => {
         await client.query('Delete attribute where id_user = $1', [id_user]).then(response=>{
         console.log(response.rows);
         console.log('todo bien')
-
+        client.end()
         })
         
         
         .catch(err=>{
             console.log(err)
+            client.end()
             res.send({status:500,message:err})
         })
     }

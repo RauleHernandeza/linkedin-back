@@ -11,7 +11,7 @@ const client = new Client(
    }
     )
 
-    const insert_experience = async(req, res) => {
+    const insert_post = async(req, res) => {
 
         const post = req.body.post;
         const date_initial = req.body.date_initial;
@@ -22,23 +22,24 @@ const client = new Client(
         const id_user = req.body.id_user;
         client.connect();
         
-        await client.query('insert into experience (post, date_initial, enterprise, description, date_ending, actualy, id_user) values ($1, $2, $3, $4, $5, $6, $7)', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
+        await client.query('insert into post (id_post, date_initial, enterprise, description, date_ending, actualy, id_user) values ($1, $2, $3, $4, $5, $6, $7)', [post, date_initial, enterprise, description, date_ending, actualy, id_user]).then(response=>{
     
         console.log(response.rows);
-    
+        client.end();
         })
         
         
         .catch(err=>{
             console.log(err)
             res.send({status:500,message:err})
+            client.end();
         })
         
        
 
 }
 
-    const update_experience = async (req, res) => {
+    const update_post = async (req, res) => {
     
    
         const post = req.body.post;
@@ -65,7 +66,7 @@ const client = new Client(
 
 
 
-    const delete_experience = async (req, res) => {
+    const delete_post = async (req, res) => {
         
         const id_user = req.body.id_user;
         client.connect();
@@ -82,7 +83,7 @@ const client = new Client(
     
 
 module.exports = {
-    insert_experience,
-    update_experience,
-    delete_experience
+    insert_post,
+    update_post,
+    delete_post
 }

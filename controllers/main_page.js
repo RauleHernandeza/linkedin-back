@@ -13,8 +13,8 @@ const get_main_page = async (req, res) => {
     
        }
         )
-            //const id_user = req.body.id_user;
-            const id_user = 1
+            const id_user = req.body.id_user;
+            //const id_user = 1
             client.connect();
             await client.query('select * from user_1 where id_user =$1', [id_user]).then(response=>{
                     a= response.rows;
